@@ -1,0 +1,6 @@
+---
+- name: Install Apache Web Server
+  hosts: webservers
+  become: yes
+  roles:
+    - webapp
