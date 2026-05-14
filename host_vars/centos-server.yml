@@ -1,4 +1,4 @@
 ansible_password: admin
-ansible_host: 10.0.26.5
+ansible_host: 10.0.49.5
 ansible_become: true 
 ansible_become_password: admin
