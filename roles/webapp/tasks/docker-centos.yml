@@ -1,0 +1,66 @@
+--- 
+- name: install some package 
+  yum:
+    name: "{{ item }}" 
+    state: latest 
+  loop: 
+    - epel-release
+    - wget
+    - yum-utils
+    - git 
+    - python3 
+    - python3-pip 
+    - lvm2 
+    - device-mapper-persistent-data
+
+- name: add repo docker 
+  yum_repository:
+    name: docker
+    description: Docker Repository
+    baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+
+- name: Add Docker CE repo
+  get_url:
+   url: https://download.docker.com/linux/centos/docker-ce.repo
+   dest: /etc/yum.repos.d/docker-ce.repo
+
+- name: update package 
+  yum: 
+    update_cache: yes
+- name: install docker
+  yum:
+    name: 
+     - docker-ce
+     - docker-ce-cli
+     - containerd.io
+    state: present
+
+# - name: start docker
+#   systemd:
+#     name: docker
+#     state: started
+#     enabled: yes
+
+- name: install docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  notify: restart docker
+
+- name: install docker python package
+  pip:
+    name: docker-py
+    state: present
+    executable: pip3
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

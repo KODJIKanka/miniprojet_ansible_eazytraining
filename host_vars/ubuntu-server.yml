@@ -1,1 +1,3 @@
-ansible_password: 
+ansible_host: 16.170.255.97
+ansible_password: Mael12@kanka
+ansible_become_password: Mael12@kanka

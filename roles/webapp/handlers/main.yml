@@ -1,2 +1,7 @@
 ---
 # handlers file for webapp
+
+- name: restart docker
+  systemd:
+    name: docker
+    state: restarted
