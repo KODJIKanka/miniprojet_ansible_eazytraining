@@ -1,3 +1,4 @@
 ansible_host: 16.170.255.97  
 ansible_password: kodji
+ansible_become: true
 ansible_become_password: kodji
