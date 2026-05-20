@@ -40,7 +40,7 @@
 
 - name: start docker
   systemd:
-    name: docker
+    name: docker.service
     state: started
     enabled: yes
 
